@@ -1,5 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
+import { PillButton } from './PillButton';
 
 export const Header = () => {
   return (
@@ -76,7 +77,4 @@ background-color: #fff;
     background-color: lightgray;
 }
 `;
-const SignUp = styled(Button)`
-background-color: var(--cyan);
-color: #fff;
-`;
+const SignUp = styled(PillButton)``;

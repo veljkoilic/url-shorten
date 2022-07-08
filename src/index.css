@@ -21,6 +21,8 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   font-size: 18px;
+  background-color: var(--gray);
+  overflow-x: hidden;
 }
 
 code {
