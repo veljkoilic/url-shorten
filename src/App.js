@@ -1,3 +1,4 @@
+import { AdvancedStatistics } from "./components/AdvancedStatistics";
 import { Header } from "./components/Header";
 import { Hero } from "./components/Hero";
 import { URLShorten } from "./components/URLShorten";
@@ -7,7 +8,7 @@ function App() {
       <Header/>
       <Hero/>
       <URLShorten/>
-      a
+      <AdvancedStatistics/>
     </div>
   );
 }

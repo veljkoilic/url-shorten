@@ -37,9 +37,11 @@ const Container = styled.div`
   align-items: center;
   padding: 10px 10%;
   background-color: #fff;
+  z-index: 5;
   ${tablet({
     flexDirection: "column",
   })}
+  
 `;
 const Left = styled.div`
   display: flex;
