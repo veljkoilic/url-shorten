@@ -23,7 +23,7 @@ const Container = styled.div`
   justify-content: flex-start;
   gap: 5%;
   background-color: #fff;
-  padding-top: 100px;
+  padding-top: 185px;
   padding-bottom: 100px;
   ${laptop({
     paddingLeft: "0",
@@ -31,7 +31,7 @@ const Container = styled.div`
     alignItems: "center",
   })}
   ${mobile({
-    paddingTop: "10px",
+    paddingTop: "115px",
   })}
 `;
 const Left = styled.div`
@@ -77,7 +77,7 @@ const Left = styled.div`
       paddingLeft: "5%",
       paddingRight: "5%",
       paddingTop: "20px",
-      marginBottom: "20px"
+      marginBottom: "20px",
     })}
   }
 `;
@@ -86,7 +86,7 @@ const Button = styled(PillButton)`
   font-size: 30px;
   border-radius: 50px;
   ${mobile({
-    fontSize: "24px"
+    fontSize: "24px",
   })}
 `;
 
