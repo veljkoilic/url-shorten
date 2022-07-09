@@ -20,7 +20,6 @@ export const URLShorten = () => {
         setError("You need to enter a URL!")
         return
     }
-    setUrl("")
     fetch(API + url)
       .then((data) => data.json())
       .then((res) => {
@@ -30,6 +29,7 @@ export const URLShorten = () => {
             setShortenedURLs((prev) => {
               return [...prev, res.result];
             });
+            setUrl("")
           } else {
             switch (res.error_code) {
               case 1:
