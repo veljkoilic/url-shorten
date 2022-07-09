@@ -5,6 +5,7 @@ function App() {
     <div className="App">
       <Header/>
       <Hero/>
+      <div>lol</div>
     </div>
   );
 }
