@@ -54,6 +54,8 @@ const LinkAndCopy = styled.div`
   })}
 `;
 const FullUrl = styled.div`
+  width: 40%;
+  word-wrap: break-word;
   ${tablet({
     borderBottom: " 1px solid rgba(0,0,0,0.08)",
   })}
