@@ -20,6 +20,7 @@ export const URLShorten = () => {
         setError("You need to enter a URL!")
         return
     }
+    setUrl("")
     fetch(API + url)
       .then((data) => data.json())
       .then((res) => {
