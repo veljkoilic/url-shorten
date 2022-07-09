@@ -4,7 +4,7 @@ import { PillButton } from "./PillButton";
 import { mobile, tablet, laptop } from "../responsive";
 
 export const Header = () => {
-    const [menuIsOpen, setMenuIsOpen] = useState(true)
+    const [menuIsOpen, setMenuIsOpen] = useState(false)
     const toggleMenu = () => {
       setMenuIsOpen(!menuIsOpen)
     }
@@ -157,6 +157,7 @@ ${tablet({
 `;
 const Hamburger = styled.span`
   display: none;
+  cursor: pointer;
   ${tablet({
     display: "block",
   })}
