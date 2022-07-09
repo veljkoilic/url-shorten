@@ -55,9 +55,11 @@ const Container = styled.footer`
   flex-wrap: wrap;
   width:80%;
   padding: 50px 10%;
+  gap: 20px;
 `;
 const Logo = styled.div`
 margin-bottom: 30px`;
+
 const List = styled.div`
  h6{
     font-size:22px;
@@ -67,6 +69,8 @@ const List = styled.div`
     list-style-type: none;
     color: gray;
     width: 250px;   
+    margin-left: 0;
+    padding-left: 0;
     li{
         cursor: pointer;
         &:hover{
@@ -76,6 +80,7 @@ const List = styled.div`
  }
 `;
 const SocialMedia = styled.div`
+width: 250px;
     svg{
         padding: 10px;
         cursor: pointer;
