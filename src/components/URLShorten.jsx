@@ -1,23 +1,92 @@
 import React from "react";
+import { useState } from "react";
 import styled from "styled-components";
 import { mobile, tablet } from "../responsive";
 import { PillButton } from "./PillButton";
 import { Url } from "./Url";
 
 export const URLShorten = () => {
+  const API = "https://api.shrtco.de/v2/shorten?url=";
+  const [url, setUrl] = useState("");
+  const [shortenedURLs, setShortenedURLs] = useState([]);
+  const [error, setError] = useState("");
+  const shortenURL = async () => {
+    fetch(API + url)
+      .then((data) => data.json())
+      .then((res) => {
+        try {
+          console.log(res);
+          if (res.ok) {
+            setShortenedURLs((prev) => {
+              return [...prev, res.result];
+            });
+          } else {
+            switch (res.error_code) {
+              case 1:
+                setError("You need to put in a URL");
+                break;
+              case 2:
+                setError("Enter a valid URL");
+                break;
+              case 3:
+                setError("Rate limit reached. Wait a second and try again");
+                break;
+              case 4:
+                setError("IP-Address has been blocked because of violating our terms of service");
+                break;
+              case 5:
+                setError("shrtcode code (slug) is already taken/in use");
+                break;
+              case 6:
+                setError("Unknown error");
+                break;
+              case 7:
+                setError("No code specified");
+                break;
+              case 8:
+                setError("Invalid code submitted");
+                break;
+              case 9:
+                setError("Missing required parameters");
+                break;
+              case 10:
+                setError("Trying to shorten a disallowed Link.");
+                break;
+              default:
+                setError("Something went wrong.");
+                break;
+            }
+          }
+        } catch (error) {
+          console.log(error);
+        }
+      });
+  };
   return (
     <>
-    <Container>
-      <Input>
-        <input type="text" placeholder="Shorten a link here..." />
-        <Error>Please add a link</Error>
-      </Input>
-      <Button>Shorten It!</Button>
-    </Container>
-    <Url/>
-    <Url/>
-    <Url/>
-
+      <Container>
+        <Input>
+          <input
+            type="text"
+            placeholder="Shorten a link here..."
+            value={url}
+            onChange={(e) => {
+              setUrl(e.target.value);
+            }}
+          />
+          <Error>{error}</Error>
+        </Input>
+        <Button
+          onClick={() => {
+            shortenURL();
+          }}
+        >
+          Shorten It!
+        </Button>
+      </Container>
+      {shortenedURLs.map((url) => (
+        <Url key={url} url={url} />
+      ))}
     </>
   );
 };
@@ -38,9 +107,8 @@ const Container = styled.div`
   border-radius: 10px;
   ${tablet({
     flexDirection: "column",
-    padding:"35px"
+    padding: "35px",
   })}
-  
 `;
 
 const Input = styled.div`
@@ -54,8 +122,8 @@ const Input = styled.div`
     padding: 15px 10px;
     border-radius: 5px;
     border: none;
-    &.error{
-        border: 2px solid var(--red);
+    &.error {
+      border: 2px solid var(--red);
     }
   }
 `;
@@ -75,6 +143,6 @@ const Button = styled(PillButton)`
   ${tablet({
     width: "100%",
     marginLeft: 0,
-    marginTop: "15px"
+    marginTop: "15px",
   })}
 `;
