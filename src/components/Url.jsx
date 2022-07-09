@@ -3,13 +3,27 @@ import styled from "styled-components";
 import { tablet } from "../responsive";
 import { PillButton } from "./PillButton";
 
-export const Url = () => {
+export const Url = ({ url }) => {
+  const copyToClipboard = (str, e) => {
+    if (navigator && navigator.clipboard && navigator.clipboard.writeText) {
+      e.target.innerHTML = "Copied!";
+      return navigator.clipboard.writeText(str);
+    } else {
+      return Promise.reject("The Clipboard API is not available.");
+    }
+  };
   return (
     <Container>
-      <FullUrl>https://www.google.com</FullUrl>
+      <FullUrl>{url.original_link}</FullUrl>
       <LinkAndCopy>
-        <ShortUrl>https://www.google.com</ShortUrl>
-        <Copy>Copy</Copy>
+        <ShortUrl>{url.full_short_link}</ShortUrl>
+        <Copy
+          onClick={(e) => {
+            copyToClipboard(url.full_short_link, e);
+          }}
+        >
+          Copy
+        </Copy>
       </LinkAndCopy>
     </Container>
   );
@@ -37,15 +51,13 @@ const LinkAndCopy = styled.div`
   gap: 20px;
   ${tablet({
     flexDirection: "column",
-
   })}
-
 `;
 const FullUrl = styled.div`
-${tablet({
-    borderBottom:" 1px solid rgba(0,0,0,0.08)"
-})}
-padding: 15px 30px;
+  ${tablet({
+    borderBottom: " 1px solid rgba(0,0,0,0.08)",
+  })}
+  padding: 15px 30px;
 `;
 
 const ShortUrl = styled.div`
@@ -61,6 +73,6 @@ const Copy = styled(PillButton)`
   ${tablet({
     width: "90%",
     marginRight: 0,
-    marginBottom: "15px"
+    marginBottom: "15px",
   })}
 `;
