@@ -1,4 +1,5 @@
 import React from "react";
+import { useEffect } from "react";
 import { useState } from "react";
 import styled from "styled-components";
 import { mobile, tablet } from "../responsive";
@@ -7,15 +8,22 @@ import { Url } from "./Url";
 
 export const URLShorten = () => {
   const API = "https://api.shrtco.de/v2/shorten?url=";
+  if(localStorage.getItem('urls') === null){
+      localStorage.setItem("urls", JSON.stringify([]))
+
+  }
   const [url, setUrl] = useState("");
-  const [shortenedURLs, setShortenedURLs] = useState([]);
+  const [shortenedURLs, setShortenedURLs] = useState(JSON.parse(localStorage.getItem('urls')));
   const [error, setError] = useState("");
   const shortenURL = async () => {
+    if(!url){
+        setError("You need to enter a URL!")
+        return
+    }
     fetch(API + url)
       .then((data) => data.json())
       .then((res) => {
         try {
-          console.log(res);
           if (res.ok) {
             setShortenedURLs((prev) => {
               return [...prev, res.result];
@@ -62,6 +70,18 @@ export const URLShorten = () => {
         }
       });
   };
+
+useEffect(() => {
+    if(localStorage.getItem('urls') !== null){
+        setShortenedURLs(JSON.parse(localStorage.getItem("urls")))
+    }else{
+        localStorage.setItem('urls', JSON.stringify(shortenedURLs))
+    }
+}, [])
+useEffect(()=>{
+    localStorage.setItem('urls', JSON.stringify(shortenedURLs))
+},[shortenedURLs])
+
   return (
     <>
       <Container>
