@@ -25,6 +25,7 @@ export const URLShorten = () => {
       .then((res) => {
         try {
           if (res.ok) {
+            setError("")
             setShortenedURLs((prev) => {
               return [...prev, res.result];
             });
@@ -93,8 +94,9 @@ useEffect(()=>{
             onChange={(e) => {
               setUrl(e.target.value);
             }}
+            style={error !== "" ? {border: "1px solid var(--red)"} : {}}
           />
-          <Error>{error}</Error>
+          <Error>{error }  &#8205; </Error>
         </Input>
         <Button
           onClick={() => {
@@ -105,7 +107,7 @@ useEffect(()=>{
         </Button>
       </Container>
       {shortenedURLs.map((url) => (
-        <Url key={url} url={url} />
+        <Url key={url.code} url={url} />
       ))}
     </>
   );
