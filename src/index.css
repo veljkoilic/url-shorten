@@ -14,7 +14,10 @@
   --very-dark-violet: hsl(260, 8%, 14%);
 
 }
+html{
+  overflow-x: hidden;
 
+}
 body {
   margin: 0;
   font-family: 'Poppins', sans-serif;
