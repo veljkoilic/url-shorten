@@ -8,28 +8,29 @@ import { Url } from "./Url";
 
 export const URLShorten = () => {
   const API = "https://api.shrtco.de/v2/shorten?url=";
-  if(localStorage.getItem('urls') === null){
-      localStorage.setItem("urls", JSON.stringify([]))
-
+  if (localStorage.getItem("urls") === null) {
+    localStorage.setItem("urls", JSON.stringify([]));
   }
+  const [apiLoading, setApiLoading] = useState(false);
   const [url, setUrl] = useState("");
-  const [shortenedURLs, setShortenedURLs] = useState(JSON.parse(localStorage.getItem('urls')));
+  const [shortenedURLs, setShortenedURLs] = useState(JSON.parse(localStorage.getItem("urls")));
   const [error, setError] = useState("");
   const shortenURL = async () => {
-    if(!url){
-        setError("You need to enter a URL!")
-        return
+    setApiLoading(true)
+    if (!url) {
+      setError("You need to enter a URL!");
+      return;
     }
     fetch(API + url)
       .then((data) => data.json())
       .then((res) => {
         try {
           if (res.ok) {
-            setError("")
+            setError("");
             setShortenedURLs((prev) => {
               return [...prev, res.result];
             });
-            setUrl("")
+            setUrl("");
           } else {
             switch (res.error_code) {
               case 1:
@@ -67,22 +68,24 @@ export const URLShorten = () => {
                 break;
             }
           }
+          setApiLoading(false)
+
         } catch (error) {
           console.log(error);
         }
       });
   };
 
-useEffect(() => {
-    if(localStorage.getItem('urls') !== null){
-        setShortenedURLs(JSON.parse(localStorage.getItem("urls")))
-    }else{
-        localStorage.setItem('urls', JSON.stringify(shortenedURLs))
+  useEffect(() => {
+    if (localStorage.getItem("urls") !== null) {
+      setShortenedURLs(JSON.parse(localStorage.getItem("urls")));
+    } else {
+      localStorage.setItem("urls", JSON.stringify(shortenedURLs));
     }
-}, [])
-useEffect(()=>{
-    localStorage.setItem('urls', JSON.stringify(shortenedURLs))
-},[shortenedURLs])
+  }, []);
+  useEffect(() => {
+    localStorage.setItem("urls", JSON.stringify(shortenedURLs));
+  }, [shortenedURLs]);
 
   return (
     <>
@@ -95,10 +98,11 @@ useEffect(()=>{
             onChange={(e) => {
               setUrl(e.target.value);
             }}
-            style={error !== "" ? {border: "1px solid var(--red)"} : {}}
+            style={error !== "" ? { border: "1px solid var(--red)" } : {}}
           />
-          <Error>{error }  &#8205; </Error>
+          <Error>{error} &#8205; </Error>
         </Input>
+
         <Button
           onClick={() => {
             shortenURL();
@@ -107,6 +111,8 @@ useEffect(()=>{
           Shorten It!
         </Button>
       </Container>
+      {apiLoading && <p style={{textAlign: "center"}}>The API is slow. Please wait a few seconds it's loading...</p>}
+
       {shortenedURLs.map((url) => (
         <Url key={url.code} url={url} />
       ))}
