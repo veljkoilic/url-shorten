@@ -18,6 +18,8 @@ Users should be able to:
 
 ### Screenshot
 
+[Live Preview](https://veljkoilic.github.io/url-shorten/)
+
 <img src='https://res.cloudinary.com/dz209s6jk/image/upload/q_auto:good,w_900/Challenges/tybadwn9wwcc10hug3sn.jpg'/>
   
 
